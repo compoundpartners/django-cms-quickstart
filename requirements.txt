@@ -100,7 +100,7 @@ djangocms-picture==3.0.0
     # via djangocms-bootstrap4
 djangocms-style==3.0.0
     # via -r requirements.in
-djangocms-text-ckeditor @ https://github.com/django-cms/djangocms-text-ckeditor/tarball/support/4.0.x
+# djangocms-text-ckeditor @ https://github.com/django-cms/djangocms-text-ckeditor/tarball/support/4.0.x
     # via
     #   -r requirements.in
     #   djangocms-bootstrap4
