@@ -13,7 +13,7 @@ psycopg2==2.8.5
 uwsgi==2.0.19.1
 
 # key requirements for django CMS
-http://github.com/django-cms/django-cms/tarball/release/4.0.x#egg=django-cms
+https://github.com/django-cms/django-cms/tarball/develop-4#egg=django-cms
 https://github.com/divio/djangocms-versioning/tarball/master#egg=djangocms-versioning  # FIXME: Requires an "official" V1 release
 https://github.com/divio/djangocms-alias/tarball/master#egg=djangocms-alias  # FIXME: Requires an "official" V1 release
 django-treebeard>=4.0,<5.0
@@ -43,7 +43,8 @@ djangocms-file>=3.0,<4.0
 
 
 # optional django CMS Bootstrap 4 modules
-djangocms-bootstrap4>=2.0,<3.0
+#djangocms-bootstrap4>=2.0,<3.0
+https://github.com/django-cms/djangocms-bootstrap4/tarball/support/django-cms-4.0.x#egg=djangocms_bootstrap4
 # optional django CMS Bootstrap 5 modules (alpha) - requires BS5 frontend setup in the templates
 # as of Q4 2021 there are still basic issues with djangocms-bootstrap5
 # https://github.com/gl-agnx/djangocms-bootstrap5/archive/refs/heads/master.zip#egg=djangocms_bootstrap5
