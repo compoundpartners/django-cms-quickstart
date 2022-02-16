@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 
     # the default alias content - optional, but used in most projects
     'djangocms_alias',
-    
+
     # the default CKEditor - optional, but used in most projects
     'djangocms_text_ckeditor',
 
@@ -215,3 +215,21 @@ MEDIA_ROOT = os.path.join('/data/media/')
 
 
 SITE_ID = 1
+
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://1d84e83c11874e648eb1cfdc09ed96b5@o178664.ingest.sentry.io/6213213",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)
