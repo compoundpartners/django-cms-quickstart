@@ -52,3 +52,5 @@ djangocms-bootstrap4>=2.0,<3.0
 https://github.com/django-cms/django-filer/archive/refs/tags/2.1rc4.zip#egg=django-filer
 
 pip-tools  # needed for compilation of this file into requirements.txt, see start of file
+
+sentry-sdk
