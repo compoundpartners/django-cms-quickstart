@@ -13,7 +13,8 @@ psycopg2==2.8.5
 uwsgi==2.0.19.1
 
 # key requirements for django CMS
-https://github.com/django-cms/django-cms/tarball/develop-4#egg=django-cms
+#https://github.com/django-cms/django-cms/tarball/develop-4#egg=django-cms
+https://github.com/django-cms/django-cms/tarball/release/4.0.x#egg=django-cms
 https://github.com/divio/djangocms-versioning/tarball/master#egg=djangocms-versioning  # FIXME: Requires an "official" V1 release
 https://github.com/divio/djangocms-alias/tarball/master#egg=djangocms-alias  # FIXME: Requires an "official" V1 release
 django-treebeard>=4.0,<5.0
