@@ -28,6 +28,28 @@ from test_articles.managers import ArticleManager, ArticleContentManager
 logger = getLogger(__name__)
 
 
+class EmptyArticleContent():
+    """
+    Empty translation object, can be returned from Article.get_translation_obj() if required
+    content object doesn't exists.
+    """
+    title = ""
+    slug = ""
+    meta_description = ""
+    template = get_cms_setting('TEMPLATES')[0][0]
+
+    def __init__(self, language):
+        self.language = language
+
+    def __nonzero__(self):
+        # Python 2 compatibility
+        return False
+
+    def __bool__(self):
+        # Python 3 compatibility
+        return False
+
+
 class Article(models.Model):
     """
     A simple article model
@@ -247,7 +269,6 @@ class Article(models.Model):
         language = self._get_translation_cache(language, fallback, force_reload)
         if language in self.translation_cache:
             return self.translation_cache[language]
-        from cms.models import EmptyArticleContent
 
         return EmptyArticleContent(language)
 
@@ -483,25 +504,3 @@ class ArticleContent(models.Model):
         #translation.article.update_languages([trans.language for trans in translations])
 
         return new
-
-
-class EmptyArticleContent():
-    """
-    Empty translation object, can be returned from Article.get_translation_obj() if required
-    content object doesn't exists.
-    """
-    title = ""
-    slug = ""
-    meta_description = ""
-    template = get_cms_setting('TEMPLATES')[0][0]
-
-    def __init__(self, language):
-        self.language = language
-
-    def __nonzero__(self):
-        # Python 2 compatibility
-        return False
-
-    def __bool__(self):
-        # Python 3 compatibility
-        return False

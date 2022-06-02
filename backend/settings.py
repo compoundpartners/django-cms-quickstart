@@ -182,7 +182,42 @@ LANGUAGE_CODE = 'en'
 
 LANGUAGES = [
     ('en', 'English'),
+    ('de', 'German'),
+    ('fr', 'Italian'),
 ]
+
+CMS_LANGUAGES = {
+    1: [
+        {
+            'code': 'en',
+            'fallbacks': ['de', 'fr'],
+            'public': True,
+            'hide_untranslated': True,
+            'redirect_on_fallback': False,
+        },
+        {
+            'code': 'de',
+            'fallbacks': ['en', 'fr'],
+            'public': True,
+        },
+        {
+            'code': 'fr',
+            'public': False,
+        },
+    ],
+}
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en',},
+        {'code': 'de',},
+        {'code': 'fr',},
+    ),
+    'default': {
+        'fallbacks': ['en'],          # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': True,   # the default; let .active_translations() return fallbacks too.
+    }
+}
 
 TIME_ZONE = 'UTC'
 
