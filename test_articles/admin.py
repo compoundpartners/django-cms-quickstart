@@ -26,6 +26,7 @@ def is_versioning_enabled():
 class ArticleContentAdmin(admin.ModelAdmin):
     form = forms.ArticleContentForm
     search_fields = ['title', 'slug']
+    prepopulated_fields = {'slug': ('title',)}
 
     def get_changeform_initial_data(self, request):
         return {'language': get_site_language_from_request(request)}
