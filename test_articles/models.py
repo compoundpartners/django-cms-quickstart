@@ -70,12 +70,12 @@ class Article(models.Model):
     #objects = ArticleManager()
 
     class Meta:
-        default_permissions = ('add', 'change', 'delete')
-        permissions = (
-            ('view_article', 'Can view article'),
-            ('publish_article', 'Can publish article'),
-            ('edit_static_placeholder', 'Can edit static placeholders'),
-        )
+        # default_permissions = ('add', 'change', 'delete')
+        # permissions = (
+            # ('view_article', 'Can view article'),
+            # ('publish_article', 'Can publish article'),
+            # ('edit_static_placeholder', 'Can edit static placeholders'),
+        # )
         verbose_name = _('article')
         verbose_name_plural = _('articles')
         app_label = 'test_articles'
@@ -164,16 +164,6 @@ class Article(models.Model):
         new_article.update_languages([trans.language for trans in translations])
 
         return new_article
-
-    def delete(self, *args, **kwargs):
-        TreeNode.get_tree(self.node).delete_fast()
-
-        if self.node.parent_id:
-            (TreeNode
-             .objects
-             .filter(pk=self.node.parent_id)
-             .update(numchild=models.F('numchild') - 1))
-        self.clear_cache(menu=True)
 
     def delete_translations(self, language=None):
         if language is None:
@@ -455,7 +445,8 @@ class ArticleContent(models.Model):
         super().save(**kwargs)
 
     def has_placeholder_change_permission(self, user):
-        return self.article.has_change_permission(user)
+        return True
+        #return self.article.has_change_permission(user)
 
     def rescan_placeholders(self):
         """
