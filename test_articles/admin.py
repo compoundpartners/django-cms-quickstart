@@ -16,7 +16,7 @@ from cms.utils.urlutils import admin_reverse
 
 from test_articles import models, forms
 from test_articles.cms_config import ArticleConfig
-from test_articles.helpers import send_post_operation, send_pre_operation
+#from test_articles.helpers import send_post_operation, send_pre_operation
 
 # # Use the version mixin if djangocms-versioning is installed and enabled
 # url_admin_classes = [admin.ModelAdmin]
@@ -32,6 +32,11 @@ from test_articles.helpers import send_post_operation, send_pre_operation
 
 def is_versioning_enabled():
     return True
+
+@admin.register(models.Section)
+class SectionAdmin(admin.ModelAdmin):
+    pass
+
 
 @admin.register(models.ArticleContent)
 class ArticleContentAdmin(admin.ModelAdmin):
@@ -160,16 +165,8 @@ class ArticleContentAdmin(admin.ModelAdmin):
             # sender=self.model
         # )
 
-        # Delete all of the pages titles contents
-        ct_content = ContentType.objects.get_for_model(models.ArticleContent)
-        #content_objs = models.ArticleContent.objects.filter(article=obj)
-        placeholders = Placeholder.objects.filter(
-            content_type=ct_content,
-            object_id=obj.pk,
-        )
-        plugins = CMSPlugin.objects.filter(placeholder__in=placeholders)
-        QuerySet.delete(plugins)
-        placeholders.delete()
+        # Delete all plugins and placeholders
+        obj._delete_placeholders()
 
         super().delete_model(request, obj)
 
@@ -184,4 +181,4 @@ class ArticleContentAdmin(admin.ModelAdmin):
         clear_permission_cache()
 
 
-admin.register(models.Article)
+#admin.register(models.Article)

@@ -1,1 +1,11 @@
+{% extends CMS_TEMPLATE %}
 
+{% block content %}
+<h3>Articles</h3>
+<ul>
+{% for article in object_list %}
+    <li><a href={{ article.get_absolute_url }}>{{ article.title }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock content %}

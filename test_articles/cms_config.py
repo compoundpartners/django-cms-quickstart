@@ -8,9 +8,6 @@ from test_articles.models import ArticleContent
 from test_articles.rendering import render_article_content
 
 
-def copy_article_content(article_content):
-    return article_content.copy()
-
 
 class ArticleConfig(CMSAppConfig):
     cms_enabled = True
@@ -20,7 +17,7 @@ class ArticleConfig(CMSAppConfig):
         VersionableItem(
             content_model=ArticleContent,
             grouper_field_name='article',
-            copy_function=copy_article_content,
+            copy_function=lambda content: content.copy(),
             extra_grouping_fields=['language'],
             version_list_filter_lookups={'language': get_language_tuple},
             content_admin_mixin=ExtendedVersionAdminMixin,
