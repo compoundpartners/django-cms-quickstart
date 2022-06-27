@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models.base import ModelState
 from django.db.models.functions import Concat
 from django.urls import reverse
+from django.urls.exceptions import NoReverseMatch
 from django.utils.encoding import force_str
 from django.utils.functional import cached_property
 from django.utils.timezone import now
@@ -76,7 +77,7 @@ class Section(models.Model):
     def get_default(cls):
         return cls.objects.get_or_create(
             nanespace=cls.default_namespace,
-            defaults={app_title=cls.default_app_title}
+            defaults={'app_title':cls.default_app_title}
         )
 
 class Article(models.Model):
@@ -403,7 +404,10 @@ class ArticleContent(models.Model):
         return _("default")
 
     def get_absolute_url(self):
-        return reverse('%s:detail' % (self.article.section or Section.default_namespace), kwargs={'slug': self.slug})
+        try:
+            return reverse('%s:detail' % (self.article.section or Section.default_namespace), kwargs={'slug': self.slug})
+        except NoReverseMatch:
+            return reverse('%s:detail' % Section.default_namespace, kwargs={'slug': self.slug})
 
     def copy(self):
         new = copy.copy(self)
