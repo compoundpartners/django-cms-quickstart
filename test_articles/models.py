@@ -72,6 +72,13 @@ class Section(models.Model):
         return self.app_title
 
 
+    @classmethod
+    def get_default(cls):
+        return cls.objects.get_or_create(
+            nanespace=cls.default_namespace,
+            defaults={app_title=cls.default_app_title}
+        )
+
 class Article(models.Model):
     """
     A simple article model

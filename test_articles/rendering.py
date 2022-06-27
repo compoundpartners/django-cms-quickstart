@@ -12,7 +12,7 @@ def render_article_content(request, article_content):
     context = {}
     context['lang'] = language
     context['article'] = article
-    request.article_config = article.section or models.Section.objects.get(nanespace=default_namespace)
+    request.article_config = article.section or models.Section.get_default()
 
     response = TemplateResponse(request, article_content.get_template(), context)
     response.add_post_render_callback(set_article_cache)
