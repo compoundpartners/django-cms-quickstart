@@ -1,6 +1,8 @@
 import functools
 import operator
 
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
@@ -19,7 +21,7 @@ class ArticleManager(models.Manager):
         """
         return ArticleQuerySet(self.model)
 
-    def search(self, q, language=None):
+    def search(self, q, language=None, current_site_only=True):
         """Simple search function
 
         Plugins can define a 'search_fields' tuple similar to ModelAdmin classes

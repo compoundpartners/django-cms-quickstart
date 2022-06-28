@@ -26,7 +26,7 @@ class ArticleContentForm(forms.ModelForm):
         if self.fields.get('language'):
             self.fields['language'].widget = forms.HiddenInput()
         if self.instance.article and self.instance.article.section:
-            self.fields['section'].initial = 1#self.instance.article.section
+            self.fields['section'].initial = self.instance.article.section
 
     def create_or_update_grouper(self, obj, **kwargs):
         '''

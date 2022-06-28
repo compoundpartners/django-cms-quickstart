@@ -22,26 +22,10 @@ from cms.cms_toolbars import (
     LANGUAGE_MENU_IDENTIFIER,
 )
 
-ADD_ARTICLE_LANGUAGE_BREAK = "Add article language Break"
-
-
 @toolbar_pool.register
 class ArticleToolbar(CMSToolbar):
     watch_models = [models.ArticleContent,]
     supported_apps = ('test_articles',)
-
-    # def get_on_delete_redirect_url(self, article, language):
-        # if article.section:
-            # try:
-                # reverse('{0}:list'.format(namespace))
-            # except:
-                # namespace = NewsBlogConfig.default_namespace
-        # else:
-            # namespace = models.Section.default_namespace
-        # with override(language):
-            # url = reverse(
-                # '{0}:list'.format(namespace))
-        # return url
 
     def _get_config(self):
         return getattr(self.request, 'article_config', None)
@@ -137,14 +121,3 @@ class ArticleToolbar(CMSToolbar):
                     **url_args)
                 menu.add_modal_item(_('Edit this article'), url=url,
                                     active=True)
-
-            # if delete_article_perm and article:
-                # redirect_url = self.get_on_delete_redirect_url(
-                    # article, language=language)
-                # url = add_url_parameters(
-                    # admin_reverse('test_articles_articlecontent_delete',
-                                  # args=[article.pk, ]),
-                    # **url_args)
-                # menu.add_modal_item(_('Delete this article'), url=url,
-                                    # on_close=redirect_url)
-

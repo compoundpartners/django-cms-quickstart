@@ -4,6 +4,7 @@ from cms.app_base import CMSAppConfig
 from cms.utils.i18n import get_language_tuple
 
 from djangocms_versioning.datastructures import VersionableItem, default_copy
+from djangocms_versioning.admin import ExtendedVersionAdminMixin
 
 from test_articles.admin import ChangeLinkesAdminMixin
 from test_articles.models import ArticleContent
@@ -35,6 +36,6 @@ class ArticleConfig(CMSAppConfig):
                 copy_function=lambda content: content.copy(),
                 extra_grouping_fields=['language'],
                 version_list_filter_lookups={'language': get_language_tuple},
-                content_admin_mixin=ChangeLinkesAdminMixin,
+                content_admin_mixin=ExtendedVersionAdminMixin,
             ),
         ]
