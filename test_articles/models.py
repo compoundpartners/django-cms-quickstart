@@ -20,6 +20,7 @@ from django.utils.translation import (
 from cms import constants
 from cms.exceptions import LanguageError
 from cms.models.fields import PlaceholderRelationField
+from cms.toolbar.utils import get_object_preview_url
 from cms.utils import i18n
 from cms.utils.conf import get_cms_setting
 from cms.utils.page import get_clean_username
@@ -75,10 +76,12 @@ class Section(models.Model):
 
     @classmethod
     def get_default(cls):
-        return cls.objects.get_or_create(
-            nanespace=cls.default_namespace,
+        default, created = cls.objects.get_or_create(
+            namespace=cls.default_namespace,
             defaults={'app_title':cls.default_app_title}
         )
+        return default
+
 
 class Article(models.Model):
     """
@@ -407,7 +410,10 @@ class ArticleContent(models.Model):
         try:
             return reverse('%s:detail' % (self.article.section or Section.default_namespace), kwargs={'slug': self.slug})
         except NoReverseMatch:
-            return reverse('%s:detail' % Section.default_namespace, kwargs={'slug': self.slug})
+            try:
+                return reverse('%s:detail' % Section.default_namespace, kwargs={'slug': self.slug})
+            except NoReverseMatch:
+                return get_object_preview_url(self, self.language)
 
     def copy(self):
         new = copy.copy(self)

@@ -14,8 +14,10 @@ from cms.toolbar.utils import get_object_preview_url
 from cms.utils.i18n import get_site_language_from_request
 from cms.utils.urlutils import admin_reverse
 
+from djangocms_versioning.admin import ExtendedVersionAdminMixin
+
 from test_articles import models, forms
-from test_articles.cms_config import ArticleConfig
+
 #from test_articles.helpers import send_post_operation, send_pre_operation
 
 # # Use the version mixin if djangocms-versioning is installed and enabled
@@ -48,7 +50,8 @@ class ArticleContentAdmin(admin.ModelAdmin):
         return {'language': get_site_language_from_request(request)}
 
     def view_on_site(self, obj):
-        return get_object_preview_url(obj, obj.language)
+        return obj.get_absolute_url()
+        #return get_object_preview_url(obj, obj.language)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}
@@ -182,3 +185,31 @@ class ArticleContentAdmin(admin.ModelAdmin):
 
 
 #admin.register(models.Article)
+
+
+class ChangeLinkesAdminMixin(ExtendedVersionAdminMixin):
+    pass
+    # def edit_redirect_view(self, request, object_id):
+        # """Redirects to the admin change view and creates a draft version
+        # if no draft exists yet.
+        # """
+        # # This view always changes data so only POST requests should work
+        # if request.method != "POST":
+            # return HttpResponseNotAllowed(
+                # ["POST"], _("This view only supports POST method.")
+            # )
+
+        # version = self.get_object(request, unquote(object_id))
+        # if version is None:
+            # raise Http404
+
+        # try:
+            # version.check_edit_redirect(request.user)
+            # target = self._get_edit_redirect_version(request, version)
+        # except ConditionFailed as e:
+            # self.message_user(request, force_str(e), messages.ERROR)
+            # return redirect(version_list_url(version.content))
+
+        # # Redirect
+        # #return redirect(get_editable_url(target.content))
+        # return redirect(admin_reverse('test_articles_articlecontent_change', args=(object_id,)))
