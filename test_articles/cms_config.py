@@ -6,7 +6,6 @@ from cms.utils.i18n import get_language_tuple
 from djangocms_versioning.datastructures import VersionableItem, default_copy
 from djangocms_versioning.admin import ExtendedVersionAdminMixin
 
-from test_articles.admin import ChangeLinkesAdminMixin
 from test_articles.models import ArticleContent
 from test_articles.rendering import render_article_content
 
