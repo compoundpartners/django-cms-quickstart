@@ -21,7 +21,7 @@ def is_versioning_enabled():
 
 @admin.register(models.Section)
 class SectionAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'namespace': ('app_title',)}
 
 
 @admin.register(models.ArticleContent)
